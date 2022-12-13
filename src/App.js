@@ -1,25 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from 'react'
+import CardCreator from './CardCreator.js'
+import Dictionary from './Dictionary.js'
+import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component{
+  state = {
+    viewPermission: false,
+    dictionary: {}
+  }
+
+  hadnleFormSubmit = (event) => {
+    event.preventDefault()
+    const temporaryDictionary = {}
+
+    if(!this.state.dictionary || !this.state.dictionary[event.target.mainWord.value]){
+      temporaryDictionary[event.target.mainWord.value] = event.target.translation.value
+    }else{
+      console.log('This word already exists.')
+    }
+
+
+    this.setState({
+      dictionary: {
+        ...this.state.dictionary,
+        ...temporaryDictionary
+      }
+    })
+
+    console.log(this.state.dictionary)
+  }
+
+  handleViewDictionaryClick = () => {
+    this.setState({
+      viewPermission: true
+    })
+  }
+
+  render(){
+    return (
+      <>
+        {
+          !this.state.viewPermission ? 
+          (<CardCreator onSubmit={event => this.hadnleFormSubmit(event)}
+                        viewDictionaryClick={this.handleViewDictionaryClick}
+           />) 
+          :
+          (
+            <Dictionary />
+          )
+        }
+      </>
+      )
+  }
 }
-
-export default App;
