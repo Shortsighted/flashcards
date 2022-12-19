@@ -1,31 +1,55 @@
 import { Component } from 'react'
-import CardCreator from './CardCreator.js'
+import WordCreator from './WordCreator.js'
 import Dictionary from './Dictionary.js'
 import './App.css'
 
 export default class App extends Component{
   state = {
     viewPermission: false,
-    dictionary: {}
+    dictionary: {},
+    wordAdded: ''
   }
 
   hadnleFormSubmit = (event) => {
     event.preventDefault()
     const temporaryDictionary = {}
 
-    if(!this.state.dictionary || !this.state.dictionary[event.target.mainWord.value]){
+    if(!this.state.dictionary[event.target.mainWord.value]){
       temporaryDictionary[event.target.mainWord.value] = event.target.translation.value
+
+      this.setState({
+        wordAdded: 'The word has been added!',
+        dictionary: {
+          ...this.state.dictionary,
+          ...temporaryDictionary
+        }
+      })
+    }else if(
+      this.state.dictionary[event.target.mainWord.value].includes(event.target.translation.value)
+    ){
+      this.setState({
+        wordAdded: 'The word already exists.',
+        dictionary: {
+          ...this.state.dictionary
+        }
+      })
     }else{
-      console.log('This word already exists.')
+      temporaryDictionary[event.target.mainWord.value] = 
+        `${this.state.dictionary[event.target.mainWord.value]}, ${event.target.translation.value}`
+      this.setState({
+        wordAdded: 'The word has been edited.',
+        dictionary: {
+          ...this.state.dictionary,
+          ...temporaryDictionary
+        }
+      })
     }
 
-
-    this.setState({
-      dictionary: {
-        ...this.state.dictionary,
-        ...temporaryDictionary
-      }
-    })
+    setTimeout(() => {
+      this.setState({
+        wordAdded: ''
+      })
+    }, 10000)
 
     console.log(this.state.dictionary)
   }
@@ -41,12 +65,17 @@ export default class App extends Component{
       <>
         {
           !this.state.viewPermission ? 
-          (<CardCreator onSubmit={event => this.hadnleFormSubmit(event)}
-                        viewDictionaryClick={this.handleViewDictionaryClick}
-           />) 
+          (
+            <>
+              {this.state.wordAdded && <div className='popup'>{this.state.wordAdded}</div>}
+              <WordCreator onSubmit={event => this.hadnleFormSubmit(event)}
+                            viewDictionaryClick={this.handleViewDictionaryClick}
+              />
+            </>
+          ) 
           :
           (
-            <Dictionary />
+            <Dictionary dictionary={this.state.dictionary}/>
           )
         }
       </>
