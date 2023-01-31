@@ -11,7 +11,7 @@ export default class Homepage extends React.Component{
                 <div className={styles.core}></div>
                 <div className={styles.contentBox}>
                     <h1>Now is the time to learn new languages!</h1>
-                    <button>Start Now</button>
+                    <button onClick={this.props.onClick}>Start Now</button>
                 </div>
             </div>
         )

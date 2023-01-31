@@ -6,9 +6,34 @@ import Homepage from './Homepage.js'
 
 export default class App extends Component{
   state = {
-    viewPermission: false,
+    viewPermission: 'homepage',
     dictionary: {},
     wordAdded: ''
+  }
+
+  checkStatus = () => {
+    if(this.state.viewPermission === 'homepage'){
+      return <Homepage onClick={this.handleStartClick} />
+    }else if(this.state.viewPermission === 'editor'){
+      return(
+        <>
+          {this.state.wordAdded && <div className='popup'>{this.state.wordAdded}</div>}
+          <WordCreator onSubmit={event => this.hadnleFormSubmit(event)}
+                        viewDictionaryClick={this.handleViewDictionaryClick}
+          />
+        </>
+      )
+    }else if(this.state.viewPermission === 'dictionary'){
+      return(
+        <Dictionary dictionary={this.state.dictionary}/>
+      )
+    }
+  }
+
+  handleStartClick = () => {
+    this.setState({
+      viewPermission: 'editor'
+    })
   }
 
   hadnleFormSubmit = (event) => {
@@ -57,30 +82,11 @@ export default class App extends Component{
 
   handleViewDictionaryClick = () => {
     this.setState({
-      viewPermission: true
+      viewPermission: 'dictionary'
     })
   }
 
   render(){
-    return (
-      <>
-        <Homepage />
-        {/* {
-          !this.state.viewPermission ? 
-          (
-            <>
-              {this.state.wordAdded && <div className='popup'>{this.state.wordAdded}</div>}
-              <WordCreator onSubmit={event => this.hadnleFormSubmit(event)}
-                            viewDictionaryClick={this.handleViewDictionaryClick}
-              />
-            </>
-          ) 
-          :
-          (
-            <Dictionary dictionary={this.state.dictionary}/>
-          )
-        } */}
-      </>
-      )
+    return this.checkStatus()
   }
 }
