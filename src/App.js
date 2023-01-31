@@ -2,6 +2,7 @@ import { Component } from 'react'
 import WordCreator from './WordCreator.js'
 import Dictionary from './Dictionary.js'
 import './App.css'
+import Homepage from './Homepage.js'
 
 export default class App extends Component{
   state = {
@@ -63,7 +64,8 @@ export default class App extends Component{
   render(){
     return (
       <>
-        {
+        <Homepage />
+        {/* {
           !this.state.viewPermission ? 
           (
             <>
@@ -77,7 +79,7 @@ export default class App extends Component{
           (
             <Dictionary dictionary={this.state.dictionary}/>
           )
-        }
+        } */}
       </>
       )
   }
