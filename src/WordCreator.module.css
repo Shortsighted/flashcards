@@ -73,7 +73,7 @@
     background-color: #F1E7FD;
     font-size: 16px;
 
-    border: 1px solid #110321;
+    border: 2px solid #110321;
     transition: all 250ms;
 }
 
@@ -107,3 +107,13 @@
     cursor: pointer;
     text-decoration: underline;
 }
+
+.popup{
+    position: absolute;
+    top: 10px;
+  
+    background-color: #F1E7FD;
+    padding: 5px 10px;
+  
+    border-radius: 10px;
+  }

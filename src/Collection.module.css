@@ -1,0 +1,137 @@
+.mainBox{
+    width: 80%;
+    height: 90%;
+
+    min-width: 700px;
+    min-height: 750px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: #F1E7FD;
+    
+    overflow-y: auto;
+}
+
+.mainBox h2{
+    margin: 35px;
+    text-align: center;
+}
+
+.buttonsWrapper{
+    width: 80%;
+    height: 50px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    border-bottom: 2px solid #110321;
+}
+
+.buttonsWrapper button{
+    padding: 5px;
+    margin: 5px;
+    height: 30px;
+
+    background-color: transparent;
+    border: 2px solid #110321;
+    color: #110321;
+
+    transition: 500ms;
+}
+
+.buttonsWrapper button:hover{
+    cursor: pointer;
+
+    background-color: #110321;
+    border: 2px solid #110321;
+    color: #F1E7FD;
+}
+
+.buttonsWrapper button:active{
+    cursor: pointer;
+
+    background-color: rgba(17, 3, 33, 0.7);
+    border: 2px solid #110321;
+    color: #F1E7FD;
+}
+
+.newFolderForm{
+    margin: 0 5px;
+    height: 30px;
+    border: 2px solid #110321;
+
+    display: flex;
+    align-items: center;
+
+    box-sizing: border-box;
+}
+
+.newFolderForm input{
+    margin: 0;
+    padding: 0 5px;
+
+    background-color: transparent;
+    border: none;
+}
+
+.newFolderForm input:focus{
+    outline: none;
+}
+
+.newFolderForm button{
+    margin: 0;
+    height: 30px;
+    border: none;
+    border-left: 2px solid #110321;
+}
+
+.newFolderForm button:hover,
+.newFolderForm button:active{
+    border: none;
+    border-left: 2px solid #110321;
+}
+
+.popup{
+    position: absolute;
+    top: 10px;
+  
+    background-color: #F1E7FD;
+    padding: 5px 10px;
+  
+    border-radius: 10px;
+}
+
+.emptyCollection{
+    font-style: italic;
+
+    margin-top: 50px;
+}
+
+.wordsBox{
+    width: 80%;
+    max-height: 85%;
+
+    margin-top: 10px;
+    margin-bottom: 25px;
+
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.wordsBox td{    
+    padding: 10px;
+}
+
+.wordsBox th{
+    font-size: 20px;
+
+    width: 50%;
+    padding: 15px;
+}
+
+.wordsBox tbody > tr{    
+    border-bottom: 1px solid #110321;
+}
