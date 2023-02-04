@@ -4,27 +4,37 @@ import styles from "./WordCreator.module.css"
 export default class WordCreator extends Component{
     render(){
         return(
-            <div className={styles.mainBox}>
-                <h2>Please, input the details below.</h2>
-
-                <form className={styles.inputForm}
-                      onSubmit={this.props.onSubmit}
-                >
-                    <div className={styles.inputFields}>
-                        <div className={styles.labels}>
-                            <label htmlFor="mainWord">Main word:</label>
-                            <label htmlFor="translation">Translation:</label>
+            <div className={styles.elementsWrapper}>
+                <div className={styles.newWordCollectionBar}>
+                    <button onClick={this.props.viewCollectionClick}>View your collection</button>
+                </div>
+                <div className={styles.cardCreationSection}>
+                    {this.props.newWordStatus && 
+                    <div className={styles.popup}>{this.props.newWordStatus}</div>}
+                    <form className={styles.inputForm}
+                        onSubmit={this.props.onSubmit}
+                    >
+                        <div className={styles.language}>
+                            <label htmlFor='language'>Language:</label>
+                            <input name='language' type='text' required />
                         </div>
-                        <div className={styles.words}>
-                            <input name="mainWord" required />
-                            <input name="translation" required />
+                        <div className={styles.mainWord}>
+                            <label htmlFor='mainWord'>Word:</label>
+                            <textarea name='mainWord' type='text' required />
                         </div>
-                    </div>
-                    <button>
-                        <div>Add to List</div>
-                    </button>
-                </form>
-                <p onClick={this.props.viewDictionaryClick}>View current dictionary</p>
+                        <div className={styles.reading}>
+                            <label htmlFor='reading'>Reading:</label>
+                            <input name='reading' type='text' required />
+                        </div>
+                        <div className={styles.meaning}>
+                            <label htmlFor='meaning'>Meaning:</label>
+                            <textarea name='meaning' type='text' required /> 
+                        </div>
+                        <button>
+                            <div>Add to List</div>
+                        </button>
+                    </form>
+                </div>
             </div>
         )
     }

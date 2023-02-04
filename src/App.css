@@ -18,13 +18,3 @@ body{
   justify-content: center;
   align-items: center;
 }
-
-.popup{
-  position: absolute;
-  top: 10px;
-
-  background-color: #F1E7FD;
-  padding: 10px;
-
-  border-radius: 10px;
-}
