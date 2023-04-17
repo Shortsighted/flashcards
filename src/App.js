@@ -8,6 +8,7 @@ export default class App extends Component{
   state = {
     viewPermission: 'homepage',
     collectionStatus: 'empty',
+    newWordCollection: {},
     collection: {},
     newWordStatus: '',
     newFolderStatus: ''
@@ -33,6 +34,7 @@ export default class App extends Component{
           <WordCreator onSubmit={event => this.hadnleFormSubmit(event)}
                         viewCollectionClick={this.handleViewCollectionClick}
                         newWordStatus={this.state.newWordStatus}
+                        newWordCollection={this.state.newWordCollection}
           />
         </>
       )
@@ -62,7 +64,10 @@ export default class App extends Component{
     const temporaryCollection = {}
 
     if(!this.state.collection[event.target.folderName.value]){
-      temporaryCollection[event.target.folderName.value] = {}
+      temporaryCollection[event.target.folderName.value] = {
+        type: 'Folder',
+        collection: {}
+      }
 
       this.setState({
         newFolderStatus: 'The folder has been added!',
@@ -91,7 +96,10 @@ export default class App extends Component{
 
   handleViewCollectionClick = () => {
     this.setState({
-      viewPermission: 'collection'
+      viewPermission: 'collection',
+      collection: {...this.state.collection,
+      ...this.state.newWordCollection},
+      newWordCollection: {}
     })
   }
 
@@ -99,35 +107,25 @@ export default class App extends Component{
     event.preventDefault()
     const temporaryCollection = {}
 
-    if(!this.state.collection[event.target.mainWord.value]){
-      temporaryCollection[event.target.mainWord.value] = event.target.meaning.value
-
+    if(!this.state.collection[event.target.mainWord.value] 
+      &&
+      !this.state.newWordCollection[event.target.mainWord.value]){
+      temporaryCollection[event.target.mainWord.value] = {
+        type: 'word',
+        meaning: event.target.meaning.value
+      }
+      
       this.setState({
         newWordStatus: 'The word has been added!',
         collectionStatus: 'not empty',
-        collection: {
-          ...this.state.collection,
+        newWordCollection: {
+          ...this.state.newWordCollection,
           ...temporaryCollection
-        }
-      })
-    }else if(
-      this.state.collection[event.target.mainWord.value].includes(event.target.meaning.value)
-    ){
-      this.setState({
-        newWordStatus: 'The word already exists.',
-        collection: {
-          ...this.state.collection
         }
       })
     }else{
-      temporaryCollection[event.target.mainWord.value] = 
-        `${this.state.collection[event.target.mainWord.value]}, ${event.target.meaning.value}`
       this.setState({
-        newWordStatus: 'The word has been edited.',
-        collection: {
-          ...this.state.collection,
-          ...temporaryCollection
-        }
+        newWordStatus: 'The word already exists.',
       })
     }
 

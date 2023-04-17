@@ -7,18 +7,18 @@ export default class Collection extends Component{
 
         for(const [key, value] of Object.entries(this.props.collection)){
             console.log(key, value)
-            if(typeof value === 'string'){
+            if(value.type === 'word'){
                 temporaryCollection.push(
                     <tr>
                         <td>{key}</td>
-                        <td>{value}</td>
+                        <td>{value.meaning}</td>
                     </tr>
                 )
             }else{
                 temporaryCollection.push(
                     <tr>
                         <td>{key}</td>
-                        <td></td>
+                        <td>{value.type}</td>
                     </tr>
                 )
             }

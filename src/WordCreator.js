@@ -7,6 +7,16 @@ export default class WordCreator extends Component{
             <div className={styles.elementsWrapper}>
                 <div className={styles.newWordCollectionBar}>
                     <button onClick={this.props.viewCollectionClick}>View your collection</button>
+                    <div className={styles.newWordsWrapper}>
+                    {
+                        Object.keys(this.props.newWordCollection).length > 0 ? 
+                        Object.keys(this.props.newWordCollection).map(word =>
+                            <div className={styles.newWord}>{word}</div>   
+                        )
+                        :
+                        <div className={styles.noNewWords}>Your new words will appear here.</div>
+                    }
+                    </div>
                 </div>
                 <div className={styles.cardCreationSection}>
                     {this.props.newWordStatus && 
