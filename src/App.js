@@ -35,6 +35,7 @@ export default class App extends Component{
                         viewCollectionClick={this.handleViewCollectionClick}
                         newWordStatus={this.state.newWordStatus}
                         newWordCollection={this.state.newWordCollection}
+                        delete={this.handleDelete}
           />
         </>
       )
@@ -112,7 +113,9 @@ export default class App extends Component{
       !this.state.newWordCollection[event.target.mainWord.value]){
       temporaryCollection[event.target.mainWord.value] = {
         type: 'word',
-        meaning: event.target.meaning.value
+        meaning: event.target.meaning.value,
+        reading: event.target.reading.value,
+        language: event.target.language.value
       }
       
       this.setState({
@@ -135,7 +138,15 @@ export default class App extends Component{
       })
     }, 5000)
 
-    console.log(this.state.collection)
+    console.log(this.state.newWordCollection)
+  }
+
+  handleDelete = (word) =>{
+    const temporaryCollection = {...this.state.newWordCollection}
+    delete temporaryCollection[word]
+    this.setState({
+      newWordCollection: {...temporaryCollection}
+    })
   }
 
   render(){

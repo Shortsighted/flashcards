@@ -11,7 +11,12 @@ export default class WordCreator extends Component{
                     {
                         Object.keys(this.props.newWordCollection).length > 0 ? 
                         Object.keys(this.props.newWordCollection).map(word =>
-                            <div className={styles.newWord}>{word}</div>   
+                            <div className={styles.newWordBox}>
+                                <div className={styles.newWord}>{word}</div>
+                                <div className={styles.deleteButton}
+                                     onClick={() => this.props.delete(word)}
+                                >&#215;</div>
+                            </div>   
                         )
                         :
                         <div className={styles.noNewWords}>Your new words will appear here.</div>
