@@ -26,6 +26,8 @@ export default class App extends Component{
                     takeNewFolderName={this.state.takeNewFolderName}
                     createNewFolder={event => this.handleCreateNewFolderClick(event)}
                     newFolderStatus={this.state.newFolderStatus}
+                    handleCheckboxChange={this.handleCheckboxChange}
+                    deleteMarkedItems={this.deleteMarkedItems}
         />
       )
     }else if(this.state.viewPermission === 'editor'){
@@ -35,7 +37,7 @@ export default class App extends Component{
                         viewCollectionClick={this.handleViewCollectionClick}
                         newWordStatus={this.state.newWordStatus}
                         newWordCollection={this.state.newWordCollection}
-                        delete={this.handleDelete}
+                        delete={this.handleNewWordDelete}
           />
         </>
       )
@@ -56,7 +58,7 @@ export default class App extends Component{
 
   handleNewFolderClick = () => {
     this.setState({
-      takeNewFolderName: true
+      takeNewFolderName: !this.state.takeNewFolderName
     })
   }
 
@@ -67,7 +69,8 @@ export default class App extends Component{
     if(!this.state.collection[event.target.folderName.value]){
       temporaryCollection[event.target.folderName.value] = {
         type: 'Folder',
-        collection: {}
+        collection: {},
+        marked: false
       }
 
       this.setState({
@@ -115,7 +118,8 @@ export default class App extends Component{
         type: 'word',
         meaning: event.target.meaning.value,
         reading: event.target.reading.value,
-        language: event.target.language.value
+        language: event.target.language.value,
+        marked: false
       }
       
       this.setState({
@@ -137,15 +141,37 @@ export default class App extends Component{
         newWordStatus: ''
       })
     }, 5000)
-
-    console.log(this.state.newWordCollection)
   }
 
-  handleDelete = (word) =>{
+  handleNewWordDelete = (word) =>{
     const temporaryCollection = {...this.state.newWordCollection}
     delete temporaryCollection[word]
     this.setState({
       newWordCollection: {...temporaryCollection}
+    })
+  }
+
+  deleteMarkedItems = () => {
+    const temporaryCollection = {...this.state.collection}
+    for(const item in temporaryCollection){
+      temporaryCollection[item].marked && delete temporaryCollection[item]
+    }
+    console.log(temporaryCollection)
+    this.setState({
+      ...this.state,
+      collection: {...temporaryCollection}
+    })
+  }
+
+  handleCheckboxChange = (item) => {
+    const temporaryCollection = {}
+    temporaryCollection[item] = this.state.collection[item]
+    temporaryCollection[item].marked = !this.state.collection[item].marked
+    
+    this.setState({
+      collection: {
+        ...this.state.collection,
+        ...temporaryCollection}
     })
   }
 
